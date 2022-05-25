@@ -1,0 +1,54 @@
+:root {
+}
+
+body {
+  padding: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+main {
+  height: 100%;
+  overflow: hidden;
+}
+:where(form, fieldset, input) {
+  font-family: inherit;
+}
+
+fieldset {
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+.settings-group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+.settings-group label {
+  display: contents;
+  gap: 1rem;
+}
+.settings-group label > * {
+  width: 100%;
+}
+button {
+  width: max-content;
+  cursor: pointer;
+  border-style: solid;
+  border-color: currentColor;
+  background-color: white;
+  border-width: 1px;
+  border-radius: 4px;
+  font-family: inherit;
+  padding-block: 0.25em;
+  padding-inline: 0.5em;
+}
+button:where(:hover, :focus) {
+  background-color: black;
+  color: white;
+}

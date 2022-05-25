@@ -1,0 +1,49 @@
+<div style="grid-row: 1; grid-column: 1; z-index: 1" class="settings">
+    <form action="" style="line-height: 1">
+        <fieldset class="graph-settings settings-group">
+            <legend>Graph params</legend>
+            <label>
+                <span>max recursive depth</span>
+                <input type="number" name="max-depth" value="4" min="1" max="32">
+            </label>
+            <label>
+                <span>min width of split</span>
+                <input type="number" name="min-width" value="4" min="1" max="64">
+            </label>
+            <label>
+                <span>min height of split</span>
+                <input type="number" name="min-height" value="4" min="1" max="64">
+            </label>
+            <label>
+                <span>direction probability</span>
+                <input type="range" name="dir-prob" value="0.5" step="0.05" min="0" max="1">
+            </label>
+            <label>
+                <span>number of sizes</span>
+                <input type="number" name="size-dist" value="8"  min="2" max="16">
+            </label>
+            <button>reload</button>
+        </fieldset>
+    </form>
+
+    <fieldset class="file-settings settings-group">
+        <legend>File settings</legend>
+        <label>
+            <span>image width</span>
+            <input type="number" name="resx" id="image-width" min="512" max="4096" step="512" value="2048" />
+        </label>
+        <label>
+            <span>image height</span>
+            <input type="number" name="resy" id="image-height" min="512" max="4096" step="512" value="2048" />
+        </label>
+        <label>
+            <span>file name sufix</span>
+            <input type="text" name="sufix" id="image-sufix" value="" />
+        </label>
+        <div>
+            <button onclick="savePng(event)" > save png</button>
+            <button onclick="saveSvg(event)" > save svg</button>
+        </div>
+    </fieldset>
+</div>
+</div>

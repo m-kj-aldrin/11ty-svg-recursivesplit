@@ -1,0 +1,11 @@
+<filter id="filter-grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence seed="1" type="fractalNoise" baseFrequency="2" />
+    <feColorMatrix type="saturate" values="0" />
+    {% set contrast = 4 %}
+    <feColorMatrix type="matrix"
+                values="
+                    {{ contrast }} 0 0 0 -{{ (contrast - 1) / 4 }}
+                    0 {{ contrast }} 0 0 -{{ (contrast - 1) / 4 }}
+                    0 0 {{ contrast }} 0 -{{ (contrast - 1) / 4 }}
+                    0 0 0 1 0" />
+</filter>
