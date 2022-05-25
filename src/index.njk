@@ -2,13 +2,14 @@
 layout: base.njk
 ---
 
+{% edge "njk" %}
 {% macro biTree(depth = 0, n = 2, w = 256, h = 256) %}
     {% if depth < n %}
-        {% if h > 8 and w > 1 %}
+        {% if h > minHeight and w > minWidth %}
 
-            {% set isVertical = [0, 1] | frand > 0.2 %}
-            {% set sizeDist = 4 %}
-            {% set delim = ([1, sizeDist] | irand * (1/sizeDist)) %}
+            {% set isVertical = [0, 1] | frand > dirProb %}
+            {% set sizeDist = sizeDist %}
+            {% set delim = ([1, sizeDist] | irand * (1 / sizeDist)) %}
 
             {% set wA = w %}
             {% set hA = h %}
@@ -47,49 +48,50 @@ layout: base.njk
                         <g class="center" transform="translate({{wB/2}} {{hB/2}})" opacity="1">
                             {% set minL = ([wB, hB] | min) / 2 %}
                             {% if[0, 1] | frand > 0.9 %}
-                                <g transform="rotate(-45)">
-                                    <circle fill="white" r="{{minL/2}}" />
-                                    <circle cx="{{minL/10}}" r="{{minL/2}}" />
-                                </g>
-                            {% else %}
-                                <circle r="{{[wB/4,hB/4] | min}}" stroke-width="0.5" stroke="white" fill="none" />
-                            {% endif %}
+                            <g transform="rotate(-45)">
+                                <circle fill="white" r="{{minL/2}}" />
+                                <circle cx="{{minL/10}}" r="{{minL/2}}" />
+                            </g>
+                        {% else %}
+                            <circle r="{{[wB/4,hB/4] | min}}" stroke-width="0.5" stroke="white" fill="none" />
+                        {% endif %}
 
-                        </g>
-                    {% endif %}
-                    {{ biTree(depth+1,n,wB,hB) }}
-                </g>
+                    </g>
+                {% endif %}
+                {{ biTree(depth+1,n,wB,hB) }}
             </g>
-        {% endif %}
+        </g>
     {% endif %}
+{% endif %}
 {% endmacro %}
 
 <svg width="100%" height="100%" viewBox="0 0 256 256">
-    <defs>
-        {% set crossPatternWidth = 4 %}
-        {% set crossPatternStrokeWidth = 0.3 %}
-        <pattern id="pattern-cross" width="{{crossPatternWidth}}" height="{{crossPatternWidth}}" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <g stroke="black" stroke-width="{{crossPatternStrokeWidth}}" vector-effect="non-scaling-stroke">
-                <path d="M0,{{crossPatternWidth/2}} h{{crossPatternWidth}}" />
-                <path d="M{{crossPatternWidth/2}},0 v{{crossPatternWidth}}" />
-            </g>
-        </pattern>
-        {% set dotsPatternWidth = 2 %}
-        {% set dotsPatternRadius = 0.3 %}
-        <pattern id="pattern-dots" width="{{dotsPatternWidth}}" height="{{dotsPatternWidth}}" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <g fill="black">
-                <circle cx="{{dotsPatternRadius*2}}" cy="{{dotsPatternRadius*2}}" r="{{dotsPatternRadius}}" />
-                <circle cx="{{dotsPatternWidth - dotsPatternRadius * 2}}" cy="{{dotsPatternWidth - dotsPatternRadius * 2}}" r="{{dotsPatternRadius}}" />
-            </g>
-        </pattern>
-        {% include "partials/grain.njk" %}
-    </defs>
-    <rect width="100%" height="100%" fill="#fbfbfb" />
+<defs>
+    {% set crossPatternWidth = 4 %}
+    {% set crossPatternStrokeWidth = 0.3 %}
+    <pattern id="pattern-cross" width="{{crossPatternWidth}}" height="{{crossPatternWidth}}" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <g stroke="black" stroke-width="{{crossPatternStrokeWidth}}" vector-effect="non-scaling-stroke">
+            <path d="M0,{{crossPatternWidth/2}} h{{crossPatternWidth}}" />
+            <path d="M{{crossPatternWidth/2}},0 v{{crossPatternWidth}}" />
+        </g>
+    </pattern>
+    {% set dotsPatternWidth = 2 %}
+    {% set dotsPatternRadius = 0.3 %}
+    <pattern id="pattern-dots" width="{{dotsPatternWidth}}" height="{{dotsPatternWidth}}" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <g fill="black">
+            <circle cx="{{dotsPatternRadius*2}}" cy="{{dotsPatternRadius*2}}" r="{{dotsPatternRadius}}" />
+            <circle cx="{{dotsPatternWidth - dotsPatternRadius * 2}}" cy="{{dotsPatternWidth - dotsPatternRadius * 2}}" r="{{dotsPatternRadius}}" />
+        </g>
+    </pattern>
+    {# {% include "partials/grain.njk" %} #}
+</defs>
+<rect width="100%" height="100%" fill="#fbfbfb" />
 
-    <g split-tree="" transform="translate(0 0)" opacity="0.85" >
-        {{ biTree(n=4) }}
-    </g>
-    <rect width="100%" height="100%" filter="url(#filter-grain)" opacity="0.05" />
+<g split-tree="" transform="translate(0 0)" opacity="0.85" >
+    {{ biTree(n=maxDepth) }}
+</g>
+<rect width="100%" height="100%" filter="url(#filter-grain)" opacity="0.05" />
 
-    {# <rect id="debug-frame" width="100%" height="100%" stroke="black" fill="none" stroke-dasharray="2" stroke-width="0.5" /> #}
+{# <rect id="debug-frame" width="100%" height="100%" stroke="black" fill="none" stroke-dasharray="2" stroke-width="0.5" /> #}
 </svg>
+{% endedge %}

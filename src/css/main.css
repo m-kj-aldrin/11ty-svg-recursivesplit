@@ -3,7 +3,7 @@
 
 body {
   padding: 1rem;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   display: grid;
   grid-template-columns: auto 1fr;
 }
@@ -17,7 +17,7 @@ main {
 }
 
 fieldset {
-  border-width: 2px;
+  border-width: 3px;
   border-style: solid;
   border-color: black;
   padding: 0.5rem;
@@ -36,7 +36,12 @@ fieldset {
 .settings-group label > * {
   width: 100%;
 }
-button {
+input{
+  font-size: inherit;
+}
+button,
+input[type="submit"] {
+  font-size: inherit;
   width: max-content;
   cursor: pointer;
   border-style: solid;
@@ -47,8 +52,9 @@ button {
   font-family: inherit;
   padding-block: 0.25em;
   padding-inline: 0.5em;
+  color: var(--col, black);
 }
-button:where(:hover, :focus) {
-  background-color: black;
+:is(button,input[type="submit"]):where(:hover, :focus) {
+  background-color: var(--col,black);
   color: white;
 }

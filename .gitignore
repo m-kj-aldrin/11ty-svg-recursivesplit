@@ -3,3 +3,4 @@ node_modules
 _site
 # Local Netlify folder
 .netlify
+netlify/edge-functions/_generated
